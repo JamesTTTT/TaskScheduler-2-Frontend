@@ -1,11 +1,16 @@
-import { useState } from "react";
-import "./App.css";
+import { AuthProvider } from "./context/AuthContext";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Home, Login } from "./Pages";
 
 function App() {
   return (
-    <div>
-      <h1>My Task Scheduling App</h1>
-    </div>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
