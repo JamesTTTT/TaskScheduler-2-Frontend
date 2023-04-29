@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 import { login, register } from "../api/authApi";
 
 const AuthContext = createContext();
@@ -9,9 +9,20 @@ const AuthProvider = ({ children }) => {
     token: null,
   });
 
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      setAuthState({
+        isAuthenticated: true,
+        token,
+      });
+    }
+  }, []);
+
   const handleLogin = async (email, password) => {
     const result = await login(email, password);
     if (result.success) {
+      localStorage.setItem("authToken", result.data.token);
       setAuthState({
         isAuthenticated: true,
         token: result.data.token,
@@ -32,6 +43,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem("authToken");
     setAuthState({
       isAuthenticated: false,
       token: null,

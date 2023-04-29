@@ -1,13 +1,13 @@
 import React from "react";
 
-const CustomForm = ({ fields, onSubmit, onChange, details }) => {
+const CustomForm = ({ mode, setMode, fields, onSubmit, onChange, details }) => {
   return (
     <form
       onSubmit={onSubmit}
-      className="flex flex-col justify-center items-center w-96 bg-dark-base p-5 rounded-xl"
+      className="flex flex-col justify-center text-dark-info items-center w-96 bg-dark-base p-5 rounded-xl"
     >
-      <h1 className="font-bold text-xl text-dark-info ">Task Phantom</h1>
-      <div className="flex flex-col justify-center items-center w-full py-7 pb-12">
+      <h1 className="font-bold text-xl text-dark-info ">Task Phantom {mode}</h1>
+      <div className="flex flex-col justify-center items-center w-full pt-5 pb-6">
         {fields.map((item, index) => {
           return (
             <input
@@ -22,9 +22,43 @@ const CustomForm = ({ fields, onSubmit, onChange, details }) => {
           );
         })}
       </div>
-      <button className=" font-bold text-dark-info bg-dark-neutral rounded-xl py-3 px-6">
-        Submit
+      <button
+        type="submit"
+        className=" font-bold hover:bg-opacity-75 bg-dark-neutral rounded-xl py-3 px-6 mb-4"
+      >
+        {mode}
       </button>
+      <div>
+        {mode === "Login" ? (
+          <p>
+            No account?{" "}
+            <button
+              type="button"
+              onClick={() => {
+                setMode("Register");
+              }}
+              className="font-bold underline"
+            >
+              Register
+            </button>{" "}
+            free here
+          </p>
+        ) : (
+          <p>
+            Already have an account?{" "}
+            <button
+              type="button"
+              onClick={() => {
+                setMode("Login");
+              }}
+              className="font-bold underline"
+            >
+              Login
+            </button>{" "}
+            here
+          </p>
+        )}
+      </div>
     </form>
   );
 };

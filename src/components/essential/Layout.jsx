@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Header } from ".";
+import { Header } from "..";
 const Layout = ({ children }) => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
@@ -12,7 +12,7 @@ const Layout = ({ children }) => {
     <div
       className={`h-full min-h-screen  ${
         isDarkMode
-          ? "bg-dark-base text-dark-primary"
+          ? "bg-dark-base text-dark-info"
           : "bg-light-base text-light-neutral"
       }`}
     >
