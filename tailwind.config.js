@@ -3,6 +3,12 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      height: {
+        128: "32rem",
+      },
+      width: {
+        128: "32rem",
+      },
       colors: {
         light: {
           primary: "#aea0e5",

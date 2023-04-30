@@ -1,4 +1,4 @@
-const baseUrl = import.meta.env.BASE_URL;
+const baseUrl = import.meta.env.VITE_BASE_URL;
 
 const login = async (email, password) => {
   try {
@@ -28,7 +28,7 @@ const login = async (email, password) => {
 
 const register = async (fullName, email, password) => {
   try {
-    const response = await fetch(`${baseUrl}api/auth/register`, {
+    const response = await fetch(`${baseUrl}/api/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

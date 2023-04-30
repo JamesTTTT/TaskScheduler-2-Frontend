@@ -1,7 +1,7 @@
-const baseUrl = import.meta.env.BASE_URL;
+const baseUrl = import.meta.env.VITE_BASE_URL;
 
 const createProject = async (title, description, token) => {
-  const response = await fetch(`${baseUrl}/api/projects`, {
+  const response = await fetch(`${baseUrl}/api/projects/create`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -9,7 +9,6 @@ const createProject = async (title, description, token) => {
     },
     body: JSON.stringify({ title, description }),
   });
-
   if (response.ok) {
     const data = await response.json();
     return { success: true, data };
@@ -21,20 +20,19 @@ const createProject = async (title, description, token) => {
 
 async function getAllProjects(token) {
   try {
-    const response = await fetch(`${baseUrl}api/projects`, {
+    const response = await fetch(`${baseUrl}/api/projects`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
-
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
     const data = await response.json();
-    return data.projects;
+    return data;
   } catch (error) {
     console.error("Error fetching projects:", error);
     return null;
