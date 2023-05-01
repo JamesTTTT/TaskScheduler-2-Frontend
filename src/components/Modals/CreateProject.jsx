@@ -1,16 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
-
-const backdropVariants = {
-  visible: { opacity: 1 },
-  hidden: { opacity: 0 },
-};
-
-const modalVariants = {
-  hidden: { y: "100%", opacity: 0 },
-  visible: { y: "0%", opacity: 1, transition: { delay: 0.5 } },
-};
+import { modalVariants, backdropVariants } from "../../framer/framerAnimations";
 
 const ProjectModal = ({
   showModal,
@@ -31,7 +22,7 @@ const ProjectModal = ({
           onClick={closeModal}
         >
           <motion.div
-            className="bg-dark-base p-6 rounded-lg w-128"
+            className="bg-dark-base2 p-6 rounded-lg w-128"
             variants={modalVariants}
             onClick={(e) => e.stopPropagation()}
           >

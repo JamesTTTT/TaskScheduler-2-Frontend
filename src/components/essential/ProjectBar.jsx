@@ -1,10 +1,24 @@
 import React from "react";
 import { AiOutlinePlus, AiOutlineExpandAlt } from "react-icons/ai";
-const ProjectBar = ({ Projects, openCreate }) => {
+const ProjectBar = ({
+  projects,
+  openCreate,
+  onSelectProject,
+  selectedProject,
+}) => {
   const ProjectsMap = () => {
-    return Projects.map((item, index) => {
+    return projects.map((item, index) => {
       return (
-        <button className="h-14 w-14 flex justify-center items-center rounded-full bg-dark-neutral mb-2">
+        <button
+          key={index}
+          onClick={() => onSelectProject(item)}
+          className={`h-14 w-14 flex justify-center items-center rounded-full bg-dark-neutral
+           mb-2 ${
+             selectedProject.title === item.title
+               ? "outline outline-1 outline-dark-primary"
+               : ""
+           }`}
+        >
           <span className="text-xl">{item.title.slice(0, 2)}</span>
         </button>
       );
@@ -13,20 +27,20 @@ const ProjectBar = ({ Projects, openCreate }) => {
 
   return (
     <div className="flex flex-col px-2">
-      <button className="h-14 w-14 flex justify-center items-center rounded-full bg-slate-900 mb-2">
+      <button className="h-14 w-14 flex justify-center items-center rounded-full bg-slate-800 mb-2">
         <span className="text-xl">
           <AiOutlineExpandAlt />
         </span>
       </button>
       <button
         onClick={openCreate}
-        className=" h-14 w-14 flex justify-center items-center rounded-full bg-slate-900 mb-2"
+        className=" h-14 w-14 flex justify-center items-center rounded-full bg-slate-800 mb-2"
       >
         <span className="text-xl">
           <AiOutlinePlus />
         </span>
       </button>
-      {Projects ? ProjectsMap() : null}
+      {projects ? ProjectsMap() : null}
     </div>
   );
 };

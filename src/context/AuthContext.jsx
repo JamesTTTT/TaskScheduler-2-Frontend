@@ -10,19 +10,26 @@ const AuthProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    if (token) {
+    const authData = JSON.parse(localStorage.getItem("authToken"));
+    if (authData && authData.token && Date.now() < authData.expiresAt) {
       setAuthState({
         isAuthenticated: true,
-        token,
+        token: authData.token,
       });
+    } else {
+      handleLogout(); // Log out the user if the token is expired or not found
     }
   }, []);
 
   const handleLogin = async (email, password) => {
     const result = await login(email, password);
     if (result.success) {
-      localStorage.setItem("authToken", result.data.token);
+      const expirationTime = Date.now() + 24 * 60 * 60 * 1000; // Add 24 hours to the current time
+      const authData = {
+        token: result.data.token,
+        expiresAt: expirationTime,
+      };
+      localStorage.setItem("authToken", JSON.stringify(authData));
       setAuthState({
         isAuthenticated: true,
         token: result.data.token,

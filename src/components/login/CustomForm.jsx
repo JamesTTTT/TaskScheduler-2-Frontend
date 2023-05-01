@@ -4,7 +4,7 @@ const CustomForm = ({ mode, setMode, fields, onSubmit, onChange, details }) => {
   return (
     <form
       onSubmit={onSubmit}
-      className="flex flex-col justify-center text-dark-info items-center w-96 bg-dark-base p-5 rounded-xl"
+      className="flex flex-col justify-center text-dark-info items-center w-96 bg-dark-base2 p-5 rounded-xl"
     >
       <h1 className="font-bold text-xl text-dark-info ">Task Phantom {mode}</h1>
       <div className="flex flex-col justify-center items-center w-full pt-5 pb-6">
