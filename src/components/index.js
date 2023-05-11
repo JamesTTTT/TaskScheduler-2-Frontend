@@ -6,6 +6,7 @@ export { default as CustomForm } from "./login/CustomForm";
 export { default as ProjectBar } from "./essential/ProjectBar";
 export { default as CreateProject } from "./Modals/CreateProject";
 export { default as TaskView } from "./Projects/TaskView";
+export { default as TaskItem } from "./Projects/TaskItem";
 export { default as CreateTask } from "./Modals/CreateTask";
 export { default as ButtonCustom } from "./util/Button";
 export { default as TextInput } from "./util/TextInput";

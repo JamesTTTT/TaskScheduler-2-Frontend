@@ -1,5 +1,6 @@
 import React from "react";
 import { BsFillGrid3X3GapFill, BsList } from "react-icons/bs";
+import { TaskItem } from "..";
 import { useTheme } from "../../context/ThemeContext";
 
 const TaskViewSettings = () => {
@@ -17,7 +18,6 @@ const TaskViewSettings = () => {
           <BsList />
         </button>
       </div>
-      <div></div>
     </div>
   );
 };
@@ -33,14 +33,15 @@ const TaskView = ({ tasks }) => {
       ) : tasks.length > 0 ? (
         <div>
           <TaskViewSettings />
-          {tasks.map((item, index) => {
-            return (
-              <div key={index}>
-                <h1>{item.title}</h1>
-                <p>{item.description}</p>
-              </div>
-            );
-          })}
+          <div className="px-2">
+            {tasks.map((item, index) => {
+              return (
+                <div key={index}>
+                  <TaskItem task={item} />
+                </div>
+              );
+            })}
+          </div>
         </div>
       ) : (
         <div className="text-2xl flex justify-center items-center h-full">
