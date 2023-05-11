@@ -1,9 +1,14 @@
 import React from "react";
 import { BsFillGrid3X3GapFill, BsList } from "react-icons/bs";
+import { useTheme } from "../../context/ThemeContext";
 
 const TaskViewSettings = () => {
+  const { colourTheme } = useTheme();
+
   return (
-    <div className="w-full flex justify-between bg-dark-base2 rounded-t-xl mb-2">
+    <div
+      className={`w-full flex justify-between bg-${colourTheme}-base2 rounded-t-xl mb-2`}
+    >
       <div className="flex h-14 px-3">
         <button className="mx-2 text-xl">
           <BsFillGrid3X3GapFill />
@@ -18,9 +23,9 @@ const TaskViewSettings = () => {
 };
 
 const TaskView = ({ tasks }) => {
-  console.log(tasks);
+  const { colourTheme } = useTheme();
   return (
-    <div className="bg-dark-neutral w-full h-96 rounded-xl">
+    <div className={`bg-${colourTheme}-neutral w-full h-96 rounded-xl`}>
       {!tasks ? (
         <div className="text-2xl flex justify-center items-center h-full">
           <h1>You must select a project</h1>
