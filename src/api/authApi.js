@@ -53,4 +53,27 @@ const register = async (fullName, email, password) => {
   }
 };
 
-export { login, register };
+const getUserDetails = async (token) => {
+  try {
+    const response = await fetch(`${baseUrl}/api/auth/details`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log(response);
+    if (response.ok) {
+      const data = await response.json();
+      return { success: true, data };
+    } else {
+      const error = await response.json();
+      return { success: false, error };
+    }
+  } catch (err) {
+    console.error(err);
+    return { success: false, error: { message: "Server error" } };
+  }
+};
+
+export { login, register, getUserDetails };

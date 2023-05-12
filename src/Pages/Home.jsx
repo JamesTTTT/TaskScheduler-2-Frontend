@@ -175,8 +175,6 @@ const Home = () => {
             <TaskView tasks={selectedProject.tasks} />
           </div>
         </div>
-
-        <button onClick={logout}>Logout</button>
       </main>
     </Layout>
   );
