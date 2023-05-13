@@ -17,6 +17,7 @@ const Login = () => {
   });
 
   const [mode, setMode] = useState("Login");
+  const [errors, setErrors] = useState({});
 
   return (
     <div className="bg-dark-neutral h-screen flex justify-center items-center">
@@ -52,6 +53,7 @@ const Login = () => {
           mode={mode}
           setMode={setMode}
           fields={authData.RegisterField}
+          errors={errors}
           onSubmit={async (e) => {
             e.preventDefault();
             const result = await register(
@@ -73,10 +75,22 @@ const Login = () => {
           }}
           details={registerDetails}
           onChange={(e) => {
+            const { name, value } = e.target;
+            const field = authData.RegisterField.find(
+              (field) => field.name === name
+            );
             setRegisterDetails({
               ...registerDetails,
-              [e.target.name]: e.target.value,
+              [e.target.name]: value,
             });
+            if (field) {
+              const isValid = field.regex.test(value);
+              setErrors((prevErrors) => ({
+                ...prevErrors,
+                [name]: isValid ? "" : field.errorMsg,
+              }));
+            }
+            console.log(errors);
           }}
         />
       )}

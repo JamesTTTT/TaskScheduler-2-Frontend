@@ -1,6 +1,18 @@
 import React from "react";
-
-const CustomForm = ({ mode, setMode, fields, onSubmit, onChange, details }) => {
+import {
+  AiOutlineExclamationCircle,
+  AiOutlineCheckCircle,
+} from "react-icons/ai";
+const CustomForm = ({
+  mode,
+  setMode,
+  fields,
+  onSubmit,
+  onChange,
+  details,
+  errors,
+}) => {
+  console.log(errors);
   return (
     <form
       onSubmit={onSubmit}
@@ -10,15 +22,24 @@ const CustomForm = ({ mode, setMode, fields, onSubmit, onChange, details }) => {
       <div className="flex flex-col justify-center items-center w-full pt-5 pb-6">
         {fields.map((item, index) => {
           return (
-            <input
+            <div
               key={index}
-              name={item.name}
-              value={details[item.name]}
-              placeholder={item.placeholder}
-              type={item.type}
-              onChange={onChange}
-              className="p-3 rounded-xl bg-dark-base border border-dark-info text-dark-info w-10/12 my-2"
-            />
+              className="w-full flex flex-row items-center justify-center"
+            >
+              <input
+                name={item.name}
+                value={details[item.name] || ""}
+                placeholder={item.placeholder}
+                type={item.type}
+                onChange={onChange}
+                className="p-3 rounded-xl bg-dark-base border border-dark-info text-dark-info w-10/12 my-2"
+              />
+              {errors === undefined ? null : errors[item.name] ? (
+                <AiOutlineExclamationCircle className="text-red-500 text-2xl ml-2" />
+              ) : (
+                <AiOutlineCheckCircle className="text-green-500 text-2xl ml-2" />
+              )}
+            </div>
           );
         })}
       </div>
