@@ -14,3 +14,4 @@ export { default as TextArea } from "./util/TextArea";
 export { default as DropDown } from "./util/DropDown";
 export { default as Calendar } from "./util/Calendar";
 export { default as TimeInput } from "./util/TimeInput";
+export { default as ProjSidebar } from "./Projects/ProjSidebar";

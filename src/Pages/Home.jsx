@@ -5,18 +5,20 @@ import {
   ProjectBar,
   TaskView,
   CreateTask,
+  ProjSidebar,
 } from "../components";
 import { createProject, getAllProjects } from "../api/projectApi";
 import { createTask } from "../api/taskApi";
 import { useAuth } from "../context/AuthContext";
 
 const Home = () => {
-  const { token, logout } = useAuth();
+  const { token } = useAuth();
 
   const [showCreateProject, setShowCreateProject] = useState(false);
   const [showCreateTask, setShowCreateTask] = useState(false);
   const [selectedProject, setSelectedProject] = useState({});
   const [projects, setProjects] = useState([]);
+  const [showSidebar, setShowSidebar] = useState(false);
   const [projectValue, setProjectValue] = useState({
     title: "",
     description: "",
@@ -104,9 +106,25 @@ const Home = () => {
     console.log("tasksValue", tasksValue);
   }, [tasksValue]);
 
+  const updateTaskStatus = (updatedTasks) => {
+    console.log("Updated Tasks:", updatedTasks);
+    setSelectedProject((prevSelectedProject) => ({
+      ...prevSelectedProject,
+      tasks: updatedTasks,
+    }));
+  };
+
   return (
     <Layout>
       <main className="pr-12">
+        <ProjSidebar
+          isOpen={showSidebar}
+          projects={projects}
+          onClose={() => {
+            setShowSidebar(false);
+          }}
+        />
+
         <CreateProject
           showModal={showCreateProject}
           closeModal={() => {
@@ -165,6 +183,9 @@ const Home = () => {
           <div className="pr-3">
             <ProjectBar
               projects={projects}
+              setSidebarShow={() => {
+                setShowSidebar(true);
+              }}
               onSelectProject={onSelectProject}
               selectedProject={selectedProject}
               openCreate={() => setShowCreateProject(true)}
@@ -172,7 +193,10 @@ const Home = () => {
           </div>
 
           <div className="flex w-full justify-center">
-            <TaskView tasks={selectedProject.tasks} />
+            <TaskView
+              tasks={selectedProject.tasks}
+              updateTaskStatus={updateTaskStatus}
+            />
           </div>
         </div>
       </main>

@@ -6,6 +6,7 @@ const ProjectBar = ({
   openCreate,
   onSelectProject,
   selectedProject,
+  setSidebarShow,
 }) => {
   const { colourTheme } = useTheme();
   const ProjectsMap = () => {
@@ -30,6 +31,7 @@ const ProjectBar = ({
   return (
     <div className={`flex flex-col px-2 text-${colourTheme}-info`}>
       <button
+        onClick={setSidebarShow}
         className={`h-14 w-14 flex justify-center items-center rounded-full bg-${colourTheme}-base2 mb-2`}
       >
         <span className="text-xl">

@@ -36,6 +36,8 @@ const CustomForm = ({
               />
               {errors === undefined ? null : errors[item.name] ? (
                 <AiOutlineExclamationCircle className="text-red-500 text-2xl ml-2" />
+              ) : errors[item.name] === undefined ? (
+                <AiOutlineExclamationCircle className="text-gray-500 text-2xl ml-2" />
               ) : (
                 <AiOutlineCheckCircle className="text-green-500 text-2xl ml-2" />
               )}
