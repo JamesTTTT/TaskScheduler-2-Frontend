@@ -8,6 +8,7 @@ import {
   ProjSidebar,
 } from "../components";
 import { createProject, getAllProjects } from "../api/projectApi";
+import { getTaskRecommendation } from "../api/openAi";
 import { createTask } from "../api/taskApi";
 import { useAuth } from "../context/AuthContext";
 
@@ -23,6 +24,7 @@ const Home = () => {
     title: "",
     description: "",
   });
+  const [recommendedTasks, setRecommendedTasks] = useState([]);
 
   const [tasksValue, setTasksValue] = useState({
     title: "",
@@ -65,9 +67,34 @@ const Home = () => {
     setProjects(res);
   };
 
+  const fetchTaskRecommendations = async () => {
+    const tasks = selectedProject.tasks.map((task) => task.title);
+    const response = await getTaskRecommendation(
+      {
+        title: selectedProject.title,
+        description: selectedProject.description,
+      },
+      tasks,
+      token
+    );
+    if (response.success) {
+      const tasks = response.data.data.tasks;
+      console.log(tasks);
+      setRecommendedTasks(tasks);
+    } else {
+      console.error(response.error);
+    }
+  };
+
   useEffect(() => {
     fetchProjects();
   }, []);
+
+  useEffect(() => {
+    if (selectedProject.title && selectedProject.tasks.length > 0) {
+      fetchTaskRecommendations();
+    }
+  }, [selectedProject]);
 
   const createProjectSubmit = async () => {
     const res = await createProject(
@@ -196,6 +223,7 @@ const Home = () => {
             <TaskView
               tasks={selectedProject.tasks}
               updateTaskStatus={updateTaskStatus}
+              recommendedTasks={recommendedTasks}
             />
           </div>
         </div>

@@ -39,8 +39,8 @@ const Header = () => {
             {userDetails ? (
               <div>
                 <h1 className="text-xl px-2 pt-2">{userDetails.fullName}</h1>
-                <h1 className="text-lg px-2 pb-2 flex justify-between">
-                  {userDetails.email}-{" "}
+                <h1 className="text-lg px-2 pb-2">
+                  {userDetails.email}
                   {userDetails.isVerified ? (
                     <p className="text-sm italic text-green-500">Verified</p>
                   ) : (

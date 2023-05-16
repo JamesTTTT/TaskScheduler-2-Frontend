@@ -19,4 +19,24 @@ const createTask = async (taskDetails, token) => {
   }
 };
 
-export { createTask };
+const updateTask = async (taskDetails, token) => {
+  const response = await fetch(`${baseUrl}/api/tasks/${taskDetails._id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(taskDetails),
+  });
+  console.log(response);
+  if (response.ok) {
+    const data = await response.json();
+    console.log("data", data);
+    return { success: true, data };
+  } else {
+    const error = await response.json();
+    return { success: false, error };
+  }
+};
+
+export { createTask, updateTask };

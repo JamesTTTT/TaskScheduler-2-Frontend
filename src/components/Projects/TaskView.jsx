@@ -3,7 +3,8 @@ import { BsFillGrid3X3GapFill, BsList } from "react-icons/bs";
 import { AiOutlinePlus } from "react-icons/ai";
 import { TaskItem } from "..";
 import { useTheme } from "../../context/ThemeContext";
-
+import { updateTask } from "../../api/taskApi";
+import { useAuth } from "../../context/AuthContext";
 const TaskViewSettings = () => {
   const { colourTheme } = useTheme();
 
@@ -23,12 +24,12 @@ const TaskViewSettings = () => {
   );
 };
 
-const TaskView = ({ tasks, updateTaskStatus }) => {
+const TaskView = ({ tasks, updateTaskStatus, recommendedTasks }) => {
   const { colourTheme } = useTheme();
   const [draggedTaskId, setDraggedTaskId] = useState(null);
   const [hoverOverStatus, setHoverOverStatus] = useState(null);
   const statusValues = ["Not Started", "Working On", "In Review", "Completed"];
-
+  const { token } = useAuth();
   const handleDragStart = (taskId) => {
     setDraggedTaskId(taskId);
   };
@@ -42,18 +43,26 @@ const TaskView = ({ tasks, updateTaskStatus }) => {
 
   const handleDrop = (event, targetStatus) => {
     event.preventDefault();
+
+    let updatedTask = null;
+
     // Update the status of the dragged task
     const updatedTasks = tasks.map((task) => {
       if (task._id === draggedTaskId) {
-        console.log("id", task.id);
-        return { ...task, status: targetStatus };
+        console.log("id", task._id);
+        updatedTask = { ...task, status: targetStatus };
+        return updatedTask;
       }
       return task;
     });
 
-    console.log("updatedTask", updatedTasks);
-
     updateTaskStatus(updatedTasks);
+
+    // If a task was updated, call the updateTask function
+    if (updatedTask !== null) {
+      updateTask(updatedTask, token);
+    }
+
     // Reset the dragged task id and hover over status
     setHoverOverStatus(null);
     setDraggedTaskId(null);
@@ -99,7 +108,7 @@ const TaskView = ({ tasks, updateTaskStatus }) => {
                       </div>
                     ))
                   ) : (
-                    <div className="w-full h-14">
+                    <div className="w-full pb-3">
                       <p className="text-sm text-gray-500">
                         Drag and drop tasks here
                       </p>
@@ -118,6 +127,19 @@ const TaskView = ({ tasks, updateTaskStatus }) => {
                 </div>
               </div>
             ))}
+            <div>
+              <h2 className="text-lg font-semibold py-2">Phantom tasks</h2>
+              <div className="flex flex-wrap">
+                {recommendedTasks &&
+                  recommendedTasks.map((item, index) => (
+                    <div key={index}>
+                      <h1 className="text-xl text-white">{item.title}</h1>
+                      <p className="text-xl text-white">{item.description}</p>
+                      {/* <TaskItem task={item} /> */}
+                    </div>
+                  ))}
+              </div>
+            </div>
           </div>
         </div>
       ) : (
