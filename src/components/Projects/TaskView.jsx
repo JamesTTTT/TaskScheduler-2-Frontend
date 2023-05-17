@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { BsFillGrid3X3GapFill, BsList } from "react-icons/bs";
 import { AiOutlinePlus } from "react-icons/ai";
-import { TaskItem } from "..";
+import { TaskItem, AiTask } from "..";
 import { useTheme } from "../../context/ThemeContext";
 import { updateTask } from "../../api/taskApi";
 import { useAuth } from "../../context/AuthContext";
-const TaskViewSettings = () => {
+import { useProject } from "../../context/ProjectContext";
+const TaskViewSettings = ({ setShowCreateTask }) => {
   const { colourTheme } = useTheme();
+  const { selectedProject } = useProject();
 
   return (
     <div
@@ -20,11 +22,30 @@ const TaskViewSettings = () => {
           <BsList />
         </button>
       </div>
+      <div className="w-full flex justify-end">
+        {selectedProject._id == null ? (
+          <h1 className="py-3 px-4  rounded-2xl m-3">selected project first</h1>
+        ) : (
+          <button
+            onClick={() => {
+              setShowCreateTask(true);
+            }}
+            className="py-2 px-3 bg-slate-800 rounded-2xl m-3 hover:bg-slate-900 transition-colors"
+          >
+            Add New Task
+          </button>
+        )}
+      </div>
     </div>
   );
 };
 
-const TaskView = ({ tasks, updateTaskStatus, recommendedTasks }) => {
+const TaskView = ({
+  tasks,
+  updateTaskStatus,
+  recommendedTasks,
+  setShowCreateTask,
+}) => {
   const { colourTheme } = useTheme();
   const [draggedTaskId, setDraggedTaskId] = useState(null);
   const [hoverOverStatus, setHoverOverStatus] = useState(null);
@@ -87,7 +108,7 @@ const TaskView = ({ tasks, updateTaskStatus, recommendedTasks }) => {
         </div>
       ) : tasks.length > 0 ? (
         <div>
-          <TaskViewSettings />
+          <TaskViewSettings setShowCreateTask={setShowCreateTask} />
           <div className="px-2">
             {statusValues.map((status) => (
               <div
@@ -133,9 +154,7 @@ const TaskView = ({ tasks, updateTaskStatus, recommendedTasks }) => {
                 {recommendedTasks &&
                   recommendedTasks.map((item, index) => (
                     <div key={index}>
-                      <h1 className="text-xl text-white">{item.title}</h1>
-                      <p className="text-xl text-white">{item.description}</p>
-                      {/* <TaskItem task={item} /> */}
+                      <AiTask task={item} />
                     </div>
                   ))}
               </div>

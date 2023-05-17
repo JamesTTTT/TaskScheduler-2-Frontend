@@ -1,10 +1,9 @@
 import React from "react";
 import { useTheme } from "../../context/ThemeContext";
 import { AiOutlinePlus, AiOutlineSetting } from "react-icons/ai";
-
-const TaskItem = ({ task }) => {
+const AiTask = ({ task }) => {
   const { colourTheme } = useTheme();
-  console.log(colourTheme);
+
   return (
     <div
       className={`p-2 mr-2 mb-2 w-80 bg-${colourTheme}-base rounded-xl
@@ -16,16 +15,16 @@ const TaskItem = ({ task }) => {
           {task.description}
         </p>
       </div>
-      <div className="py-1 text-2xl flex justify-end">
-        <button className="mx-1 hover:text-blue-300">
-          <AiOutlinePlus />
-        </button>
-        <button className="mx-1 hover:text-blue-300">
-          <AiOutlineSetting />
+      <div className="py-1 flex justify-end">
+        <button
+          className="mx-1 px-2 py-1 bg-slate-800
+         hover:text-blue-300 rounded-xl"
+        >
+          Configure
         </button>
       </div>
     </div>
   );
 };
 
-export default TaskItem;
+export default AiTask;

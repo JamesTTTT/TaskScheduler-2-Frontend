@@ -11,13 +11,13 @@ import { createProject, getAllProjects } from "../api/projectApi";
 import { getTaskRecommendation } from "../api/openAi";
 import { createTask } from "../api/taskApi";
 import { useAuth } from "../context/AuthContext";
+import { useProject } from "../context/ProjectContext";
 
 const Home = () => {
   const { token } = useAuth();
-
+  const { selectedProject, setSelectedProject } = useProject();
   const [showCreateProject, setShowCreateProject] = useState(false);
   const [showCreateTask, setShowCreateTask] = useState(false);
-  const [selectedProject, setSelectedProject] = useState({});
   const [projects, setProjects] = useState([]);
   const [showSidebar, setShowSidebar] = useState(false);
   const [projectValue, setProjectValue] = useState({
@@ -91,6 +91,7 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
+    setRecommendedTasks([]);
     if (selectedProject.title && selectedProject.tasks.length > 0) {
       fetchTaskRecommendations();
     }
@@ -189,23 +190,6 @@ const Home = () => {
           }}
         />
 
-        <div className="w-full flex justify-end">
-          {selectedProject._id == null ? (
-            <h1 className="py-3 px-4  rounded-2xl m-3">
-              selected project first
-            </h1>
-          ) : (
-            <button
-              onClick={() => {
-                setShowCreateTask(true);
-              }}
-              className="py-3 px-4 bg-slate-800 rounded-2xl m-3"
-            >
-              Add New Task
-            </button>
-          )}
-        </div>
-
         <div className="flex">
           <div className="pr-3">
             <ProjectBar
@@ -224,6 +208,7 @@ const Home = () => {
               tasks={selectedProject.tasks}
               updateTaskStatus={updateTaskStatus}
               recommendedTasks={recommendedTasks}
+              setShowCreateTask={setShowCreateTask}
             />
           </div>
         </div>
