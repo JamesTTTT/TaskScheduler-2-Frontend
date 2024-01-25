@@ -66,11 +66,8 @@ const TaskView = ({
     event.preventDefault();
 
     let updatedTask = null;
-
-    // Update the status of the dragged task
     const updatedTasks = tasks.map((task) => {
       if (task._id === draggedTaskId) {
-        console.log("id", task._id);
         updatedTask = { ...task, status: targetStatus };
         return updatedTask;
       }
@@ -78,13 +75,9 @@ const TaskView = ({
     });
 
     updateTaskStatus(updatedTasks);
-
-    // If a task was updated, call the updateTask function
     if (updatedTask !== null) {
       updateTask(updatedTask, token);
     }
-
-    // Reset the dragged task id and hover over status
     setHoverOverStatus(null);
     setDraggedTaskId(null);
   };
@@ -162,7 +155,8 @@ const TaskView = ({
           </div>
         </div>
       ) : (
-        <div className="text-2xl flex justify-center items-center h-full">
+        <div className="text-2xl flex justify-center items-center h-full flex-col">
+          <TaskViewSettings setShowCreateTask={setShowCreateTask} />
           <h1>There are currently no tasks for the project</h1>
         </div>
       )}

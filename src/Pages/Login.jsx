@@ -33,7 +33,7 @@ const Login = () => {
               loginDetails.password
             );
             if (result.success) {
-              console.log("Login successful");
+              ("Login successful");
               // Handle successful login
             } else {
               console.error("Login failed:", result.error);
@@ -62,12 +62,12 @@ const Login = () => {
               registerDetails.password
             );
             if (result.success) {
-              console.log("Register successful");
+              ("Register successful");
               const result = await login(
                 registerDetails.email,
                 registerDetails.password
               );
-              console.log(result);
+              result;
             } else {
               console.error("Register failed:", result.error);
               // Handle failed register
@@ -90,7 +90,7 @@ const Login = () => {
                 [name]: isValid ? "" : field.errorMsg,
               }));
             }
-            console.log(errors);
+            errors;
           }}
         />
       )}
