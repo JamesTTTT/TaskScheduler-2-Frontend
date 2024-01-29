@@ -12,7 +12,7 @@ const CustomForm = ({
   details,
   errors,
 }) => {
-  console.log(errors);
+  (errors);
   return (
     <form
       onSubmit={onSubmit}

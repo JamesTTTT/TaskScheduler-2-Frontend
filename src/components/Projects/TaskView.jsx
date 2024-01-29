@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { BsFillGrid3X3GapFill, BsList } from "react-icons/bs";
-import { AiOutlinePlus } from "react-icons/ai";
-import { TaskItem, AiTask } from "..";
+
+import { TaskBlocks, TaskList } from "..";
 import { useTheme } from "../../context/ThemeContext";
 import { updateTask } from "../../api/taskApi";
 import { useAuth } from "../../context/AuthContext";
 import { useProject } from "../../context/ProjectContext";
-const TaskViewSettings = ({ setShowCreateTask }) => {
+const TaskViewSettings = ({ setShowCreateTask, setIsBlockView }) => {
   const { colourTheme } = useTheme();
   const { selectedProject } = useProject();
 
@@ -15,10 +15,21 @@ const TaskViewSettings = ({ setShowCreateTask }) => {
       className={`w-full flex justify-between bg-${colourTheme}-base2 rounded-t-xl mb-2`}
     >
       <div className="flex h-14 px-3">
-        <button className="mx-2 text-xl">
+        <button
+          className="mx-2 text-xl hover:opacity-75"
+          onClick={() => {
+            setIsBlockView(true);
+          }}
+        >
           <BsFillGrid3X3GapFill />
         </button>
-        <button className="mx-2 text-2xl">
+        <button
+          className="mx-2 text-2xl hover:opacity-75"
+          onClick={() => {
+            console.log("HELLO");
+            setIsBlockView(false);
+          }}
+        >
           <BsList />
         </button>
       </div>
@@ -30,7 +41,7 @@ const TaskViewSettings = ({ setShowCreateTask }) => {
             onClick={() => {
               setShowCreateTask(true);
             }}
-            className="py-2 px-3 bg-slate-800 rounded-2xl m-3 hover:bg-slate-900 transition-colors"
+            className="py-2 px-3 bg-slate-800 rounded-2xl m-3 hover:bg-slate-900 transition-colors text-lg"
           >
             Add New Task
           </button>
@@ -49,6 +60,7 @@ const TaskView = ({
   const { colourTheme } = useTheme();
   const [draggedTaskId, setDraggedTaskId] = useState(null);
   const [hoverOverStatus, setHoverOverStatus] = useState(null);
+  const [isBlockView, setIsBlockView] = useState(true);
   const statusValues = ["Not Started", "Working On", "In Review", "Completed"];
   const { token } = useAuth();
   const handleDragStart = (taskId) => {
@@ -101,62 +113,40 @@ const TaskView = ({
         </div>
       ) : tasks.length > 0 ? (
         <div>
-          <TaskViewSettings setShowCreateTask={setShowCreateTask} />
+          <TaskViewSettings
+            setShowCreateTask={setShowCreateTask}
+            setIsBlockView={setIsBlockView}
+          />
           <div className="px-2">
-            {statusValues.map((status) => (
-              <div
-                key={status}
-                onDragOver={(event) => handleDragOver(event, status)}
-                onDrop={(event) => handleDrop(event, status)}
-              >
-                <h2 className="text-lg font-semibold py-2">{status}</h2>
-                <div className="flex flex-wrap">
-                  {groupedTasks[status] ? (
-                    groupedTasks[status].map((item) => (
-                      <div
-                        key={item._id}
-                        draggable
-                        onDragStart={() => handleDragStart(item._id)}
-                      >
-                        <TaskItem task={item} />
-                      </div>
-                    ))
-                  ) : (
-                    <div className="w-full pb-3">
-                      <p className="text-sm text-gray-500">
-                        Drag and drop tasks here
-                      </p>
-                    </div>
-                  )}
-                  {hoverOverStatus === status && (
-                    <div
-                      className="p-2 m-2 w-80 bg-base rounded-xl overflow-hidden
-                      break-words h-40 flex justify-center items-center outline-dashed outline-1 outline-dark-primary"
-                    >
-                      <span>
-                        <AiOutlinePlus />
-                      </span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-            <div>
-              <h2 className="text-lg font-semibold py-2">Phantom tasks</h2>
-              <div className="flex flex-wrap">
-                {recommendedTasks &&
-                  recommendedTasks.map((item, index) => (
-                    <div key={index}>
-                      <AiTask task={item} />
-                    </div>
-                  ))}
-              </div>
-            </div>
+            {isBlockView ? (
+              <TaskBlocks
+                statusValues={statusValues}
+                groupedTasks={groupedTasks}
+                handleDragStart={handleDragStart}
+                handleDragOver={handleDragOver}
+                handleDrop={handleDrop}
+                hoverOverStatus={hoverOverStatus}
+                recommendedTasks={recommendedTasks}
+              />
+            ) : (
+              <TaskList
+                statusValues={statusValues}
+                groupedTasks={groupedTasks}
+                handleDragStart={handleDragStart}
+                handleDragOver={handleDragOver}
+                handleDrop={handleDrop}
+                hoverOverStatus={hoverOverStatus}
+                recommendedTasks={recommendedTasks}
+              />
+            )}
           </div>
         </div>
       ) : (
         <div className="text-2xl flex justify-center items-center h-full flex-col">
-          <TaskViewSettings setShowCreateTask={setShowCreateTask} />
+          <TaskViewSettings
+            setShowCreateTask={setShowCreateTask}
+            setIsBlockView={setIsBlockView}
+          />
           <h1>There are currently no tasks for the project</h1>
         </div>
       )}

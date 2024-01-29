@@ -71,7 +71,12 @@ const CreateTask = ({
               />
               <TimeInput />
               <div className="flex justify-between w-40">
-                <ButtonCustom type="button" label="Close" transparent={true} />
+                <ButtonCustom
+                  type="button"
+                  label="Close"
+                  transparent={true}
+                  onClick={closeModal}
+                />
                 <ButtonCustom type="submit" label="Create" />
               </div>
             </form>

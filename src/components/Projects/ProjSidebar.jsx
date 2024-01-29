@@ -4,7 +4,6 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { sidebar } from "../../framer/framerAnimations";
 import { dateConverter } from "../../util/tools";
 const ProjSidebar = ({ isOpen, projects, onClose }) => {
-  console.log("projects", projects);
   return (
     <>
       {isOpen && (

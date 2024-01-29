@@ -16,3 +16,6 @@ export { default as Calendar } from "./util/Calendar";
 export { default as TimeInput } from "./util/TimeInput";
 export { default as ProjSidebar } from "./Projects/ProjSidebar";
 export { default as AiTask } from "./Projects/AiTask";
+export { default as TaskBlocks } from "./Projects/TaskBlocks";
+export { default as TaskList } from "./Projects/TaskList";
+export { default as TaskListItem } from "./Projects/TaskListItem";

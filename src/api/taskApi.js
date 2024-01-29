@@ -9,7 +9,7 @@ const createTask = async (taskDetails, token) => {
     },
     body: JSON.stringify(taskDetails),
   });
-  console.log(response);
+  response;
   if (response.ok) {
     const data = await response.json();
     return { success: true, data };
@@ -28,10 +28,9 @@ const updateTask = async (taskDetails, token) => {
     },
     body: JSON.stringify(taskDetails),
   });
-  console.log(response);
+  response;
   if (response.ok) {
     const data = await response.json();
-    console.log("data", data);
     return { success: true, data };
   } else {
     const error = await response.json();

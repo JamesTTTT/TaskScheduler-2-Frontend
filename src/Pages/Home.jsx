@@ -63,7 +63,7 @@ const Home = () => {
 
   const fetchProjects = async () => {
     const res = await getAllProjects(token);
-    console.log("Projects:", res);
+
     setProjects(res);
   };
 
@@ -79,7 +79,7 @@ const Home = () => {
     );
     if (response.success) {
       const tasks = response.data.data.tasks;
-      console.log(tasks);
+      tasks;
       setRecommendedTasks(tasks);
     } else {
       console.error(response.error);
@@ -90,12 +90,14 @@ const Home = () => {
     fetchProjects();
   }, []);
 
-  useEffect(() => {
-    setRecommendedTasks([]);
-    if (selectedProject.title && selectedProject.tasks.length > 0) {
-      fetchTaskRecommendations();
-    }
-  }, [selectedProject]);
+  // THIS IS FOR THE AI
+
+  // useEffect(() => {
+  //   setRecommendedTasks([]);
+  //   if (selectedProject.title && selectedProject.tasks.length > 0) {
+  //     fetchTaskRecommendations();
+  //   }
+  // }, [selectedProject]);
 
   const createProjectSubmit = async () => {
     const res = await createProject(
@@ -108,7 +110,7 @@ const Home = () => {
       setShowCreateProject(false);
       fetchProjects();
     }
-    console.log(res);
+    res;
   };
 
   const createTaskSubmit = async () => {
@@ -118,11 +120,10 @@ const Home = () => {
       setShowCreateTask(false);
       fetchProjects();
     }
-    console.log(res);
+    res;
   };
 
   const onSelectProject = (project) => {
-    console.log("Selected Project:", project);
     setSelectedProject(project);
     setTasksValue((prevTasksValue) => ({
       ...prevTasksValue,
@@ -130,12 +131,7 @@ const Home = () => {
     }));
   };
 
-  useEffect(() => {
-    console.log("tasksValue", tasksValue);
-  }, [tasksValue]);
-
   const updateTaskStatus = (updatedTasks) => {
-    console.log("Updated Tasks:", updatedTasks);
     setSelectedProject((prevSelectedProject) => ({
       ...prevSelectedProject,
       tasks: updatedTasks,

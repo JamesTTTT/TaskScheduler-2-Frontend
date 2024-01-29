@@ -9,10 +9,10 @@ const Header = () => {
   const { token, logout } = useAuth();
 
   useEffect(() => {
-    console.log(token);
+    (token);
     const fetchUserDetails = async () => {
       const res = await getUserDetails(token);
-      console.log(res);
+      (res);
       setUserDetails(res.data);
     };
     fetchUserDetails();

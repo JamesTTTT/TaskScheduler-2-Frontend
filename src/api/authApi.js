@@ -12,7 +12,7 @@ const login = async (email, password) => {
         password,
       }),
     });
-
+    console.log(response);
     if (response.ok) {
       const data = await response.json();
       return { success: true, data };
@@ -22,6 +22,7 @@ const login = async (email, password) => {
     }
   } catch (err) {
     console.error(err);
+    console.log(err);
     return { success: false, error: { message: "Server error" } };
   }
 };
@@ -62,7 +63,7 @@ const getUserDetails = async (token) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(response);
+    response;
     if (response.ok) {
       const data = await response.json();
       return { success: true, data };

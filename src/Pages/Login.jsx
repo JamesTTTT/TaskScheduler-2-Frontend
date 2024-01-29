@@ -33,7 +33,7 @@ const Login = () => {
               loginDetails.password
             );
             if (result.success) {
-              ("Login successful");
+              console.log("Login successful");
               // Handle successful login
             } else {
               console.error("Login failed:", result.error);
