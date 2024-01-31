@@ -1,5 +1,3 @@
-import Calendar from "./util/Calendar";
-
 export { default as Layout } from "./essential/Layout";
 export { default as Header } from "./essential/Header";
 export { default as CustomForm } from "./login/CustomForm";
@@ -19,3 +17,4 @@ export { default as AiTask } from "./Projects/AiTask";
 export { default as TaskBlocks } from "./Projects/TaskBlocks";
 export { default as TaskList } from "./Projects/TaskList";
 export { default as TaskListItem } from "./Projects/TaskListItem";
+export { default as TaskCalendar } from "./Projects/TaskCalendar";

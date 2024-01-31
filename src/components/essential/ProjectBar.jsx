@@ -1,5 +1,9 @@
 import React from "react";
-import { AiOutlinePlus, AiOutlineExpandAlt } from "react-icons/ai";
+import {
+  AiOutlinePlus,
+  AiOutlineExpandAlt,
+  AiTwotoneCalendar,
+} from "react-icons/ai";
 import { useTheme } from "../../context/ThemeContext";
 const ProjectBar = ({
   projects,
@@ -7,6 +11,8 @@ const ProjectBar = ({
   onSelectProject,
   selectedProject,
   setSidebarShow,
+  openCalendar,
+  showCalender,
 }) => {
   const { colourTheme } = useTheme();
   const ProjectsMap = () => {
@@ -44,6 +50,16 @@ const ProjectBar = ({
       >
         <span className="text-xl">
           <AiOutlinePlus />
+        </span>
+      </button>
+      <button
+        onClick={openCalendar}
+        className={`h-14 w-14 flex justify-center items-center rounded-full bg-${colourTheme}-base2 mb-2 ${
+          showCalender ? "outline outline-1 outline-dark-primary" : ""
+        }`}
+      >
+        <span className="text-xl">
+          <AiTwotoneCalendar />
         </span>
       </button>
       {projects ? ProjectsMap() : null}

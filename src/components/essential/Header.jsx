@@ -9,18 +9,18 @@ const Header = () => {
   const { token, logout } = useAuth();
 
   useEffect(() => {
-    (token);
+    token;
     const fetchUserDetails = async () => {
       const res = await getUserDetails(token);
-      (res);
+      res;
       setUserDetails(res.data);
     };
     fetchUserDetails();
   }, []);
 
   return (
-    <div className="w-full h-24 p-3 flex justify-between relative">
-      <h1 className="text-2xl font-bold">TaskPhantom.net</h1>
+    <div className="w-full h-24 p-3 flex justify-between relative border-dark-primary">
+      <h1 className="text-2xl font-bold">TaskPhantom.tech</h1>
       <div
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
@@ -56,12 +56,9 @@ const Header = () => {
             <div className="p-0 text-lg flex justify-evenly border-t border-dark-primary">
               <button
                 onClick={logout}
-                className="p-2 bg-dark-base my-2 rounded-xl"
+                className="p-2 bg-dark-base rounded-xl w-full"
               >
                 Logout
-              </button>
-              <button className="p-2 bg-dark-base my-2 rounded-xl">
-                Settings
               </button>
             </div>
           </motion.div>

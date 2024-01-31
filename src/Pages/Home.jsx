@@ -6,6 +6,7 @@ import {
   TaskView,
   CreateTask,
   ProjSidebar,
+  TaskCalendar,
 } from "../components";
 import { createProject, getAllProjects } from "../api/projectApi";
 import { getTaskRecommendation } from "../api/openAi";
@@ -19,6 +20,7 @@ const Home = () => {
   const [showCreateProject, setShowCreateProject] = useState(false);
   const [showCreateTask, setShowCreateTask] = useState(false);
   const [projects, setProjects] = useState([]);
+  const [showCalender, setShowCalendar] = useState(true);
   const [showSidebar, setShowSidebar] = useState(false);
   const [projectValue, setProjectValue] = useState({
     title: "",
@@ -63,7 +65,7 @@ const Home = () => {
 
   const fetchProjects = async () => {
     const res = await getAllProjects(token);
-
+    console.log(res);
     setProjects(res);
   };
 
@@ -84,6 +86,11 @@ const Home = () => {
     } else {
       console.error(response.error);
     }
+  };
+
+  const openCalendar = () => {
+    setSelectedProject({});
+    setShowCalendar(true);
   };
 
   useEffect(() => {
@@ -124,6 +131,7 @@ const Home = () => {
   };
 
   const onSelectProject = (project) => {
+    setShowCalendar(false);
     setSelectedProject(project);
     setTasksValue((prevTasksValue) => ({
       ...prevTasksValue,
@@ -167,6 +175,7 @@ const Home = () => {
             createProjectSubmit();
           }}
         />
+
         <CreateTask
           showModal={showCreateTask}
           taskValues={tasksValue}
@@ -196,17 +205,24 @@ const Home = () => {
               onSelectProject={onSelectProject}
               selectedProject={selectedProject}
               openCreate={() => setShowCreateProject(true)}
+              openCalendar={openCalendar}
+              showCalender={showCalender}
             />
           </div>
-
-          <div className="flex w-full justify-center">
-            <TaskView
-              tasks={selectedProject.tasks}
-              updateTaskStatus={updateTaskStatus}
-              recommendedTasks={recommendedTasks}
-              setShowCreateTask={setShowCreateTask}
-            />
-          </div>
+          {showCalender ? (
+            <div className="flex w-full justify-center">
+              <TaskCalendar tasks={projects} />
+            </div>
+          ) : (
+            <div className="flex w-full justify-center">
+              <TaskView
+                tasks={selectedProject.tasks}
+                updateTaskStatus={updateTaskStatus}
+                recommendedTasks={recommendedTasks}
+                setShowCreateTask={setShowCreateTask}
+              />
+            </div>
+          )}
         </div>
       </main>
     </Layout>

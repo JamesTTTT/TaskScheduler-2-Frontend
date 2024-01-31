@@ -1,6 +1,5 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { useEffect } from "react";
 import { modalVariants, backdropVariants } from "../../framer/framerAnimations";
 
 const ProjectModal = ({
