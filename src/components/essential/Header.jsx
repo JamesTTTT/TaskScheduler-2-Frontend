@@ -3,6 +3,7 @@ import { getUserDetails } from "../../api/authApi";
 import { FaRegUserCircle } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useAuth } from "../../context/AuthContext";
+import ghostLogo from "../../../public/ghost.png";
 const Header = () => {
   const [isHovering, setIsHovering] = useState(false);
   const [userDetails, setUserDetails] = useState({});
@@ -20,7 +21,10 @@ const Header = () => {
 
   return (
     <div className="w-full h-24 p-3 flex justify-between relative border-dark-primary">
-      <h1 className="text-2xl font-bold">TaskPhantom.tech</h1>
+      <div className="flex items-center gap-6">
+        <img src="../../../public/ghost.png" width={50} alt="Logo"></img>
+        <h1 className="text-2xl font-bold">TaskPhantom.tech</h1>
+      </div>
       <div
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
