@@ -20,6 +20,7 @@ const Home = () => {
   const [showCreateProject, setShowCreateProject] = useState(false);
   const [showCreateTask, setShowCreateTask] = useState(false);
   const [projects, setProjects] = useState([]);
+  const [totalTasks, setTotalTasks] = useState([]);
   const [showCalender, setShowCalendar] = useState(true);
   const [showSidebar, setShowSidebar] = useState(false);
   const [projectValue, setProjectValue] = useState({
@@ -54,6 +55,15 @@ const Home = () => {
       sharedWith: [],
       projectId: selectedProject._id,
     });
+  };
+
+  const extractAllTask = (data) => {
+    let allTasks = [];
+    data.forEach((project) => {
+      allTasks = allTasks.concat(project.tasks);
+    });
+
+    return allTasks;
   };
 
   const resetAddProject = () => {
@@ -95,6 +105,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchProjects();
+    setTotalTasks(extractAllTask(projects));
   }, []);
 
   // THIS IS FOR THE AI
@@ -211,7 +222,7 @@ const Home = () => {
           </div>
           {showCalender ? (
             <div className="flex w-full justify-center">
-              <TaskCalendar tasks={projects} />
+              <TaskCalendar tasks={totalTasks} />
             </div>
           ) : (
             <div className="flex w-full justify-center">

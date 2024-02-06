@@ -6,6 +6,7 @@ const TaskCalendar = ({ tasks }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
   const renderGrid = () => {
+    console.log("Tasks", tasks);
     const days = [];
 
     const firstDayOfMonth = new Date(
@@ -19,27 +20,42 @@ const TaskCalendar = ({ tasks }) => {
       0
     ).getDate();
 
-    // Save for later
-    const totalDaysInPreviousMonth = new Date(
-      currentMonth.getFullYear(),
-      currentMonth.getMonth(),
-      0
-    ).getDate();
-
-    for (let i = 1; i < firstDayOfMonth; i++) {
+    for (let i = 0; i < firstDayOfMonth; i++) {
       days.push(
         <div
+          key={`prev-${i}`}
           className={`border border-${colourTheme}-primary p-4 opacity-25 h-36`}
         ></div>
       );
     }
 
     for (let i = 1; i <= totalDaysInMonth; i++) {
+      const date = new Date(
+        currentMonth.getFullYear(),
+        currentMonth.getMonth(),
+        i
+      );
+      const tasksForDay = tasks.filter((task) => {
+        const taskDate = new Date(task.dueDate);
+        return (
+          taskDate.getDate() === date.getDate() &&
+          taskDate.getMonth() === date.getMonth() &&
+          taskDate.getFullYear() === date.getFullYear()
+        );
+      });
+
       days.push(
         <div
+          key={`day-${i}`}
           className={`border border-${colourTheme}-primary p-4 h-36 transition`}
         >
           {i}
+
+          {tasksForDay.map((task, index) => (
+            <div key={index} className="text-sm opacity-75">
+              {task.title}
+            </div>
+          ))}
         </div>
       );
     }
